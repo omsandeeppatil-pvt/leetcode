@@ -1,0 +1,28 @@
+class Solution:
+    def isHappy(self, n: int) -> bool:
+        """
+        Determines if a number is a happy number. A happy number is defined by the following process:
+        Starting with any positive integer, replace the number by the sum of the squares of its digits,
+        and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle
+        that does not include 1. Those numbers for which this process ends in 1 are happy numbers.
+
+        Args:
+            n (int): The number to check.
+
+        Returns:
+            bool: True if the number is happy, False otherwise.
+        """
+        def get_next(number: int) -> int:
+            total_sum = 0
+            while number > 0:
+                digit = number % 10
+                total_sum += digit * digit
+                number //= 10  # Use integer division to avoid float results
+            return total_sum
+        
+        seen = set()  # Use a set to track seen numbers for O(1) lookups
+        while n != 1 and n not in seen:
+            seen.add(n)
+            n = get_next(n)
+        
+        return n == 1
